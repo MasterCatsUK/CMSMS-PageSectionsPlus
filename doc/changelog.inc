@@ -1,3 +1,4 @@
+<li><strong>1.6.7</strong><ul><li>Removed the factory Basic template’s developer data dump; upgrade refreshes only the unchanged previous factory template.</li><li>Added licence headers and project artwork for public distribution.</li></ul></li>
 <li><strong>1.6.6</strong><ul><li>General-purpose public distribution with neutral setup documentation and clean install packages.</li></ul></li>
 <ul>
 <li><strong>1.6.4</strong><ul><li>Added an independent Tilt picture checkbox to each image column in every section. Existing and new pictures default to ticked; unticking is saved explicitly. Exposed tilt to frontend templates and applied it in the Bootstrap layout.</li></ul></li>

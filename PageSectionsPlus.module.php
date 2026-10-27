@@ -1,4 +1,5 @@
 <?php
+/** SPDX-License-Identifier: GPL-2.0-or-later. See the module docs/LICENSE file. */
 #-------------------------------------------------------------------------
 # Module: PageSectionsPlus
 #-------------------------------------------------------------------------
@@ -10,7 +11,7 @@
 
 class PageSectionsPlus extends CMSModule
 {
-    const VERSION = '1.6.6';
+    const VERSION = '1.6.7';
     const TEMPLATE_TYPE = 'frontend';
     const BASIC_TEMPLATE_NAME = 'PageSectionsPlus Basic';
     const BOOTSTRAP_TEMPLATE_TYPE = 'bootstrap';
@@ -51,7 +52,7 @@ class PageSectionsPlus extends CMSModule
 
     public function GetAuthorEmail()
     {
-        return 'andrew@pagesectionsplus.invalid';
+        return '2790828+MasterCatsUK@users.noreply.github.com';
     }
 
     public function GetDependencies()

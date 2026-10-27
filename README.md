@@ -1,6 +1,8 @@
 # Page Sections Plus
 
-CMS Made Simple module. Version 1.6.6. It adds a `{content_module}` block for repeatable two-column sections.
+![PageSections Plus module banner](assets/banner-1544x500.png)
+
+CMS Made Simple module. Version 1.6.7. It adds a `{content_module}` block for repeatable two-column sections.
 
 ## Install
 
@@ -54,7 +56,7 @@ Version 1.5.0 adds separate Backend Group Permissions for deleting sections, reo
 
 Two Design Manager templates are installed:
 
-- **PageSectionsPlus Basic** is the default. It contains minimal Smarty output plus `{$sections|@print_r:true}` so new users can inspect the available values without layout markup.
+- **PageSectionsPlus Basic** is the default. It contains minimal Smarty output without a frontend data dump or layout framework.
 - **PageSectionsPlus Bootstrap** is the complete frontend layout, focused on websites using Bootstrap 5.3.
 
 Select the Bootstrap template with:
@@ -71,6 +73,11 @@ Help for the module is in `doc/module_help.inc`. It is shown under **Extensions 
 
 The module and examples use general-purpose names, with no site content or
 images included. Syntax checks passed locally; installation in a running
-CMSMS site remains to be verified. The Basic template includes a data dump
-for inspecting available fields. Use the Bootstrap template for a finished
-layout, or remove the inspection output from your custom template.
+CMSMS site remains to be verified. The Basic template supplies unstyled content output. Use the Bootstrap
+template for a complete layout.
+
+## Forge preparation (1.6.7)
+
+Removed the factory Basic template’s developer inspection output. Upgrades
+refresh only the unchanged previous factory Basic template; customised
+templates remain intact. Added licence headers and the project banner.

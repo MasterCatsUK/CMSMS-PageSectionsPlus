@@ -21,7 +21,7 @@
 <pre>{content_module module="PageSectionsPlus" block="sections" template=""}
 {content_module module="PageSectionsPlus" block="sections" template="PageSectionsPlus Basic"}
 {content_module module="PageSectionsPlus" block="sections" template="PageSectionsPlus Bootstrap"}</pre>
-<p><strong>PageSectionsPlus Basic</strong> contains only simple Smarty output and <code>{$sections|@print_r:true}</code>, making the available data easy to inspect. <strong>PageSectionsPlus Bootstrap</strong> is the complete frontend layout and is focused on websites using Bootstrap 5.3.</p>
+<p><strong>PageSectionsPlus Basic</strong> contains only simple Smarty output without layout markup or a frontend data dump. <strong>PageSectionsPlus Bootstrap</strong> is the complete frontend layout and is focused on websites using Bootstrap 5.3.</p>
 <p>Edit a page that uses that template. The <strong>Page sections</strong> field is the editor.</p>
 <p><strong>Show/Hide Page Sections</strong> collapses the editor. The choice is remembered separately for each saved page and Page Sections block in that browser. New unsaved pages start open.</p>
 

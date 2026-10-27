@@ -1,4 +1,5 @@
 <?php
+/** SPDX-License-Identifier: GPL-2.0-or-later. See the module docs/LICENSE file. */
 if (!defined('CMS_VERSION')) exit;
 
 if (!isset($oldversion)) {
@@ -108,5 +109,18 @@ if (version_compare($oldversion, '1.6.5', '<') && class_exists('CmsLayoutTemplat
         }
     } catch (Exception $e) {
         error_log('PageSectionsPlus upgrade: unable to refresh the gallery factory template: '.$e->getMessage());
+    }
+}
+
+// Remove the old inspection output only from an unchanged factory Basic template.
+if (version_compare($oldversion, '1.6.7', '<') && class_exists('CmsLayoutTemplate')) {
+    try {
+        $tpl = \CmsLayoutTemplate::load(PageSectionsPlus::BASIC_TEMPLATE_NAME);
+        if (is_object($tpl) && hash('sha256', trim(str_replace("\r\n", "\n", $tpl->get_content()))) === 'bd4cfe3f0e01dd2757863e911fa4f2264452346daee21b1965441581707c97eb') {
+            $tpl->set_content(PageSectionsPlus::reset_frontend_template(null));
+            $tpl->save();
+        }
+    } catch (Exception $e) {
+        error_log('PageSectionsPlus upgrade: unable to refresh the factory Basic template: '.$e->getMessage());
     }
 }

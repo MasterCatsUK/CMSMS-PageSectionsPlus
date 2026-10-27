@@ -1,4 +1,5 @@
 <?php
+/** SPDX-License-Identifier: GPL-2.0-or-later. See the module docs/LICENSE file. */
 $lang['friendlyname'] = 'Page Sections Plus';
 $lang['admindescription'] = 'Repeatable left and right page sections for the {content_module} tag.';
 $lang['moddescription'] = 'Repeatable left and right page sections for the {content_module} tag.';

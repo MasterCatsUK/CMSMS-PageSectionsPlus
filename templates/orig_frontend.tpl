@@ -20,6 +20,4 @@
 {/if}
 {/foreach}
 
-{* Remove this after inspecting the available section data. *}
-{$sections|@print_r:true}
 {/if}
