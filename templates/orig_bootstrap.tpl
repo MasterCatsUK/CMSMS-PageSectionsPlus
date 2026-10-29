@@ -23,7 +23,7 @@
             {if $item.left.alt}alt="{$item.left.alt|escape:'htmlall'}"{/if}
           >
         {elseif $item.left.type == 'gallery'}
-          {GMS gallery=$item.left.gallery show_buttons='0'}
+          {if $gms_available}{cms_module module='GMS' gallery=$item.left.gallery show_buttons='0'}{/if}
         {else}
           <div class="psplus-richtext text-start">{$item.left.html}</div>
         {/if}
@@ -48,7 +48,7 @@
             {if $item.right.alt}alt="{$item.right.alt|escape:'htmlall'}"{/if}
           >
         {elseif $item.right.type == 'gallery'}
-          {GMS gallery=$item.right.gallery show_buttons='0'}
+          {if $gms_available}{cms_module module='GMS' gallery=$item.right.gallery show_buttons='0'}{/if}
         {else}
           <div class="psplus-richtext text-start">{$item.right.html}</div>
         {/if}
@@ -74,7 +74,7 @@
               {if $item.left.alt}alt="{$item.left.alt|escape:'htmlall'}"{/if}
             >
           {elseif $item.left.type == 'gallery'}
-            {GMS gallery=$item.left.gallery show_buttons='0'}
+            {if $gms_available}{cms_module module='GMS' gallery=$item.left.gallery show_buttons='0'}{/if}
           {else}
             <div class="psplus-richtext text-start">{$item.left.html}</div>
           {/if}
@@ -91,7 +91,7 @@
               {if $item.right.alt}alt="{$item.right.alt|escape:'htmlall'}"{/if}
             >
           {elseif $item.right.type == 'gallery'}
-            {GMS gallery=$item.right.gallery show_buttons='0'}
+            {if $gms_available}{cms_module module='GMS' gallery=$item.right.gallery show_buttons='0'}{/if}
           {else}
             <div class="psplus-richtext text-start">{$item.right.html}</div>
           {/if}

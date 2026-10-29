@@ -1,3 +1,4 @@
+<li><strong>1.6.8</strong><ul><li>Show gallery controls only when optional GMS is available.</li><li>Preserve saved gallery IDs while GMS is absent; omit unavailable galleries without breaking text, pictures or Bootstrap layouts.</li><li>Use guarded core module calls in the Bootstrap template; upgrades refresh only the unchanged factory template.</li></ul></li>
 <li><strong>1.6.7</strong><ul><li>Removed the factory Basic template’s developer data dump; upgrade refreshes only the unchanged previous factory template.</li><li>Added licence headers and project artwork for public distribution.</li></ul></li>
 <li><strong>1.6.6</strong><ul><li>General-purpose public distribution with neutral setup documentation and clean install packages.</li></ul></li>
 <ul>

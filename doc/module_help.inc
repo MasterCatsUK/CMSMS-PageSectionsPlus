@@ -3,7 +3,7 @@
 <p>Each side has:</p>
 <ul>
 <li>A Bootstrap background class (<code>bg-body</code>, <code>bg-body-secondary</code>, <code>bg-primary</code>, and the other <code>bg-*</code> options).</li>
-<li>A content type: <strong>WYSIWYG</strong> (the CMSMS editor) or <strong>Image</strong>.</li>
+<li>A content type: <strong>WYSIWYG</strong> (the CMSMS editor) or <strong>Image</strong>. <strong>Gallery (GMS)</strong> is available only when Gallery Made Simple is installed and active.</li>
 </ul>
 <p>Image sides use the same picture control as Easy Read:</p>
 <ul>
@@ -68,3 +68,8 @@
 
 <h3>Requirements</h3>
 <p>CMS Made Simple 2.2 or newer, with Design Manager and the core file picker (File Manager). The page design should load Bootstrap if you use the <code>bg-*</code> and grid classes from the default template.</p>
+
+<h3>Optional Gallery Made Simple integration</h3>
+<p>Gallery controls are hidden when GMS is unavailable. Existing gallery selections are retained, with an editor notice, and are omitted from frontend output until GMS is restored. Text and picture columns keep their layout; the remaining filled column spans the full width.</p>
+<p>Version 1.6.8 refreshes only the unchanged factory Bootstrap template. Customised templates are preserved. In custom templates, replace direct GMS short tags with guarded core calls, for example:</p>
+<pre>{if $gms_available}{cms_module module='GMS' gallery=$item.left.gallery show_buttons='0'}{/if}</pre>

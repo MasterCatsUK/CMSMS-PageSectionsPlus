@@ -124,3 +124,16 @@ if (version_compare($oldversion, '1.6.7', '<') && class_exists('CmsLayoutTemplat
         error_log('PageSectionsPlus upgrade: unable to refresh the factory Basic template: '.$e->getMessage());
     }
 }
+
+// Make GMS optional without replacing a site's customised Bootstrap design.
+if (version_compare($oldversion, '1.6.8', '<') && class_exists('CmsLayoutTemplate')) {
+    try {
+        $tpl = \CmsLayoutTemplate::load(PageSectionsPlus::BOOTSTRAP_TEMPLATE_NAME);
+        if (is_object($tpl) && hash('sha256', trim(str_replace("\r\n", "\n", $tpl->get_content()))) === '5099bcf59c5e22bb4cdb1bd51cd4cd05fae583b8039bdcc4e0106113e91571f9') {
+            $tpl->set_content(PageSectionsPlus::reset_bootstrap_template(null));
+            $tpl->save();
+        }
+    } catch (Exception $e) {
+        error_log('PageSectionsPlus upgrade: unable to refresh the optional-gallery factory template: '.$e->getMessage());
+    }
+}

@@ -11,7 +11,7 @@
 
 class PageSectionsPlus extends CMSModule
 {
-    const VERSION = '1.6.7';
+    const VERSION = '1.6.8';
     const TEMPLATE_TYPE = 'frontend';
     const BASIC_TEMPLATE_NAME = 'PageSectionsPlus Basic';
     const BOOTSTRAP_TEMPLATE_TYPE = 'bootstrap';
@@ -640,6 +640,7 @@ class PageSectionsPlus extends CMSModule
     {
         $data = $this->decode_value($value);
         $smarty = \CmsApp::get_instance()->GetSmarty();
+        $smarty->assign('gms_available', $this->IsGalleryAvailable());
         $smarty->assign('sections', $this->process_section_smarty($data['items']));
         $smarty->assign('block_name', $blockName);
         $smarty->assign('blockparams', $blockparams);
@@ -682,17 +683,25 @@ class PageSectionsPlus extends CMSModule
 
     public function type_options()
     {
-        return array(
+        $options = array(
             'wysiwyg' => $this->Lang('type_wysiwyg'),
             'image' => $this->Lang('type_image'),
-            'gallery' => $this->Lang('type_gallery'),
         );
+        if ($this->IsGalleryAvailable()) {
+            $options['gallery'] = $this->Lang('type_gallery');
+        }
+        return $options;
+    }
+
+    public function IsGalleryAvailable()
+    {
+        return class_exists('cms_utils') && \cms_utils::module_available('GMS');
     }
 
     private function gallery_options($current = '0')
     {
         $options = array('0' => $this->Lang('select_gallery'));
-        if (class_exists('cms_utils') && is_object(\cms_utils::get_module('GMS'))) {
+        if ($this->IsGalleryAvailable()) {
             try {
                 $db = \cmsms()->GetDb();
                 $rows = $db->GetArray('SELECT id,title,active FROM '.CMS_DB_PREFIX.'module_gms_galleries WHERE active=1 OR id=? ORDER BY sort_order,title,id', array((int)$current));
@@ -962,8 +971,14 @@ class PageSectionsPlus extends CMSModule
 
     private function process_section_smarty($items)
     {
+        $gms_available = $this->IsGalleryAvailable();
         foreach ($items as $index => $item) {
             foreach (array('left', 'right') as $side) {
+                if (isset($item[$side]['type']) && $item[$side]['type'] === 'gallery' && !$gms_available) {
+                    // Suppress unavailable galleries only in the rendered copy, not saved page data.
+                    $items[$index][$side]['filled'] = '0';
+                    continue;
+                }
                 if (!isset($item[$side]['type'], $item[$side]['html']) || $item[$side]['type'] !== 'wysiwyg') {
                     continue;
                 }
@@ -1253,6 +1268,8 @@ class PageSectionsPlus extends CMSModule
         $raw_name = $name_base.'['.$side.']';
         $id = $id_base.'_'.$side;
         $type = $col['type'];
+        $gms_available = $this->IsGalleryAvailable();
+        $unavailable_gallery = $type === 'gallery' && !$gms_available;
 
         $html = array();
         $html[] = sprintf(
@@ -1260,7 +1277,7 @@ class PageSectionsPlus extends CMSModule
             htmlspecialchars($side, ENT_QUOTES, 'UTF-8')
         );
         $html[] = '<legend data-default-label="'.htmlspecialchars($label, ENT_QUOTES, 'UTF-8').'">'.$label.'</legend>';
-        if ($this->CanSelectContentType()) {
+        if ($this->CanSelectContentType() && !$unavailable_gallery) {
             $html[] = '<label>'.$this->Lang('content_type').' ';
             $html[] = $this->select_html($raw_name.'[type]', 'psplus-type', $this->type_options(), $type);
             $html[] = '</label>';
@@ -1291,12 +1308,19 @@ class PageSectionsPlus extends CMSModule
         $html[] = '</label>';
         $html[] = '</div>';
 
-        $show_gallery = $type === 'gallery' ? '' : ' style="display:none"';
-        $html[] = '<div class="psplus-gallery-fields"'.$show_gallery.'>';
-        $html[] = '<label>'.$this->Lang('gallery_label').' ';
-        $html[] = $this->select_html($raw_name.'[gallery]', 'psplus-gallery', $this->gallery_options($col['gallery']), $col['gallery']);
-        $html[] = '</label><p>'.$this->Lang('gallery_help').'</p>';
-        $html[] = '</div>';
+        if ($gms_available) {
+            $show_gallery = $type === 'gallery' ? '' : ' style="display:none"';
+            $html[] = '<div class="psplus-gallery-fields"'.$show_gallery.'>';
+            $html[] = '<label>'.$this->Lang('gallery_label').' ';
+            $html[] = $this->select_html($raw_name.'[gallery]', 'psplus-gallery', $this->gallery_options($col['gallery']), $col['gallery']);
+            $html[] = '</label><p>'.$this->Lang('gallery_help').'</p>';
+            $html[] = '</div>';
+        } else {
+            $html[] = $this->hidden_input($raw_name.'[gallery]', $col['gallery']);
+            if ($unavailable_gallery) {
+                $html[] = '<p class="psplus-gallery-unavailable">'.$this->Lang('gallery_unavailable').'</p>';
+            }
+        }
 
         $html[] = '<div class="psplus-html-fields"'.$show_html.'>';
         $html[] = '<label>'.$this->Lang('wysiwyg_content').'</label>';

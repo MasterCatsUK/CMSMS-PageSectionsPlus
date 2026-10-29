@@ -84,3 +84,5 @@ $lang['tpltype_bootstrap'] = 'Bootstrap';
 $lang['template_name'] = 'PageSectionsPlus Basic';
 
 return $lang;
+
+$lang['gallery_unavailable'] = 'This saved gallery is unavailable because Gallery Made Simple (GMS) is not installed or active. Its selection is preserved. Install or activate GMS to edit and display it again.';

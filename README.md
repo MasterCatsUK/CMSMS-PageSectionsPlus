@@ -2,7 +2,7 @@
 
 ![PageSections Plus module banner](assets/banner-1544x500.png)
 
-CMS Made Simple module. Version 1.6.7. It adds a `{content_module}` block for repeatable two-column sections.
+CMS Made Simple module. Version 1.6.8. It adds a `{content_module}` block for repeatable two-column sections.
 
 ## Install
 
@@ -27,7 +27,7 @@ Upgrading from 1.0.0 registers the frontend template in Design Manager. A custom
 - Drag the handle to reorder sections.
 - Each side has its own Bootstrap background.
 - **WYSIWYG** uses the CMSMS editor for normal formatted text.
-- **Gallery (GMS)** lets editors select a saved gallery without entering a module tag. Pictures and layout are managed in Gallery Made Simple; each gallery uses its saved template.
+- **Gallery (GMS)** appears only when Gallery Made Simple is installed and available. Editors can select a saved gallery without entering a module tag; pictures and layout are managed in GMS. Without GMS, text and image sections keep working. Previously saved gallery selections are retained and resume when GMS is restored.
 - **Image** offers **Upload image**, **Use image link +**, and the native CMSMS **File Picker**. Imported URLs are copied onto the hosting, and the preview appears in the box.
 - Image position is left, centre, or right.
 - Each picture in each section has its own **Tilt picture** checkbox. Untick it for a straight picture. New pictures and existing pictures without a saved choice default to ticked. Explicitly unticked choices remain unticked after saving, reordering or swapping sides.
@@ -85,3 +85,15 @@ templates remain intact. Added licence headers and the project banner.
 ## Credits and acknowledgements
 
 See [CREDITS.md](CREDITS.md) for the projects, contributors, services, documentation and artwork that support this module. Existing licence notices are preserved.
+
+## Optional GMS galleries
+
+GMS is optional, not an installation dependency. Version 1.6.8 hides gallery controls when GMS is unavailable and omits unavailable gallery columns from frontend output while retaining their saved IDs. A remaining text or picture column uses the full-width layout.
+
+The upgrade refreshes only the unchanged factory Bootstrap template. Customised Design Manager templates are preserved. If your custom template calls `{GMS ...}`, replace that call with the core tag inside the availability guard, for example:
+
+```smarty
+{if $gms_available}{cms_module module='GMS' gallery=$item.left.gallery show_buttons='0'}{/if}
+```
+
+The core `cms_module` tag allows the template to compile when the optional GMS short tag is absent.
