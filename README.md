@@ -81,3 +81,7 @@ template for a complete layout.
 Removed the factory Basic template’s developer inspection output. Upgrades
 refresh only the unchanged previous factory Basic template; customised
 templates remain intact. Added licence headers and the project banner.
+
+## Credits and acknowledgements
+
+See [CREDITS.md](CREDITS.md) for the projects, contributors, services, documentation and artwork that support this module. Existing licence notices are preserved.
